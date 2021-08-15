@@ -53,3 +53,24 @@ func (m *MovementController) Save(w http.ResponseWriter, r *http.Request) {
 
 	h.Ok(w, newMovement)
 }
+
+func (m *MovementController) Update(w http.ResponseWriter, r *http.Request) {
+	var movement models.Movement
+
+	vars := mux.Vars(r)
+
+	id, err := strconv.Atoi(vars["id"])
+	if err != nil {
+		h.InternalServerError(w, err.Error())
+	}
+
+	err = json.NewDecoder(r.Body).Decode(&movement)
+	if err != nil {
+		h.InternalServerError(w, err.Error())
+	}
+
+	service := services.MovementService{}
+	updated, err := service.Update(uint(id), movement)
+
+	h.Ok(w, updated)
+}
