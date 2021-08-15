@@ -1,6 +1,7 @@
 package database
 
 import (
+	"finance-manager/domain/models"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -13,4 +14,11 @@ func Connect() (*gorm.DB, error) {
 		return nil, err
 	}
 	return database, nil
+}
+
+func Migrate(db *gorm.DB) error {
+	if err := db.AutoMigrate(&models.Movement{}, &models.Pocket{}); err != nil {
+		return err
+	}
+	return nil
 }
