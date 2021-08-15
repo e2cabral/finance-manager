@@ -1,6 +1,8 @@
 package controllers
 
 import (
+	"encoding/json"
+	"finance-manager/domain/models"
 	"finance-manager/domain/services"
 	h "finance-manager/infra/helpers/http"
 	"github.com/gorilla/mux"
@@ -40,4 +42,19 @@ func (controller *PocketController) GetPocketById(w http.ResponseWriter, r *http
 	}
 
 	h.Ok(w, &pocket)
+}
+
+func (controller *PocketController) Save(w http.ResponseWriter, r *http.Request) {
+	var pocket models.Pocket
+	if err := json.NewDecoder(r.Body).Decode(&pocket); err != nil {
+		h.InternalServerError(w, err.Error())
+	}
+
+	service := services.PocketService{}
+	newPocket, err := service.Save(pocket)
+	if err != nil {
+		h.InternalServerError(w, err.Error())
+	}
+
+	h.Ok(w, newPocket)
 }
