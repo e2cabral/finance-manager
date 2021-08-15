@@ -29,3 +29,7 @@ func (repository *MovementRepository) GetById(id uint, movements *models.Movemen
 func (repository *MovementRepository) Save(movement *models.Movement) {
 	repository.handler.Create(&movement)
 }
+
+func (repository *MovementRepository) Update(id uint, movement *models.Movement) {
+	repository.handler.Update("value", &movement).Where("id = ?", id)
+}
