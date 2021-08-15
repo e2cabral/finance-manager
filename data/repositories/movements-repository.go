@@ -22,6 +22,10 @@ func (repository *MovementRepository) GetMovements(movements *[]models.Movement)
 	repository.handler.Find(&movements)
 }
 
+func (repository *MovementRepository) GetById(id uint, movements *[]models.Movement) {
+	repository.handler.Find(&movements, "id = ?", id)
+}
+
 func (repository *MovementRepository) Save(movement *models.Movement) {
 	repository.handler.Create(&movement)
 }
