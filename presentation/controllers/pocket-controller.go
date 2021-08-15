@@ -58,3 +58,25 @@ func (controller *PocketController) Save(w http.ResponseWriter, r *http.Request)
 
 	h.Ok(w, newPocket)
 }
+
+func (controller *PocketController) Update(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	var pocket models.Pocket
+	service := services.PocketService{}
+
+	id, err := strconv.Atoi(vars["id"])
+	if err != nil {
+		h.InternalServerError(w, err.Error())
+	}
+
+	if err := json.NewDecoder(r.Body).Decode(&pocket); err != nil {
+		h.InternalServerError(w, err.Error())
+	}
+
+	updated, err := service.Update(uint(id), pocket)
+	if err != nil {
+		h.InternalServerError(w, err.Error())
+	}
+
+	h.Ok(w, &updated)
+}
