@@ -31,6 +31,16 @@ func (service *PocketService) GetPocketById(id uint) (*models.Pocket, error) {
 	return &pocket, nil
 }
 
+func (service *PocketService) Save(pocket models.Pocket) (*models.Pocket, error) {
+	repository, err := repositories.NewPocketRepository()
+	if err != nil {
+		return nil, err
+	}
+
+	repository.Save(&pocket)
+	return &pocket, nil
+}
+
 func (service *PocketService) Update(id uint, pocket models.Pocket) (*models.Pocket, error) {
 	repository, err := repositories.NewPocketRepository()
 	if err != nil {
