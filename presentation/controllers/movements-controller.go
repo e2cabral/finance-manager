@@ -5,7 +5,9 @@ import (
 	"finance-manager/domain/models"
 	"finance-manager/domain/services"
 	h "finance-manager/infra/helpers/http"
+	"github.com/gorilla/mux"
 	"net/http"
+	"strconv"
 )
 
 type MovementController struct{}
@@ -23,6 +25,19 @@ func (m *MovementController) GetMovements(w http.ResponseWriter, r *http.Request
 	}
 
 	h.Ok(w, movements)
+}
+
+func (m *MovementController) GetById(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	service := services.MovementService{}
+
+	id, err := strconv.Atoi(vars["id"])
+	if err != nil {
+		h.InternalServerError(w, err.Error())
+	}
+
+	movement, err := service.GetById(uint(id))
+	h.Ok(w, movement)
 }
 
 func (m *MovementController) Save(w http.ResponseWriter, r *http.Request) {
