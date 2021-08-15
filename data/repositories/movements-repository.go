@@ -18,18 +18,18 @@ func NewMovementRepository() (*MovementRepository, error) {
 	return &MovementRepository{handler: db}, nil
 }
 
-func (repository *MovementRepository) GetMovements(movements *[]models.Movement) {
-	repository.handler.Find(&movements)
+func (repository *MovementRepository) GetMovements(pocketId uint, movements *[]models.Movement) {
+	repository.handler.Find(&movements, "pocket_id = ?", pocketId)
 }
 
-func (repository *MovementRepository) GetById(id uint, movements *models.Movement) {
-	repository.handler.Find(&movements, "id = ?", id)
+func (repository *MovementRepository) GetById(id uint, pocketId uint, movements *models.Movement) {
+	repository.handler.Find(&movements, "id = ? AND pocket_id = ?", id, pocketId)
 }
 
 func (repository *MovementRepository) Save(movement *models.Movement) {
 	repository.handler.Create(&movement)
 }
 
-func (repository *MovementRepository) Update(id uint, movement *models.Movement) {
-	repository.handler.Update("value", &movement).Where("id = ?", id)
+func (repository *MovementRepository) Update(id uint, pocketId uint, movement *models.Movement) {
+	repository.handler.Update("value", &movement).Where("id = ? AND pocket_id = ?", id, pocketId)
 }
