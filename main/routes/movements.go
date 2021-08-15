@@ -7,8 +7,8 @@ import (
 
 func MovementsRoutes(r *mux.Router) {
 	controller := controllers.NewMovementsController()
-	r.HandleFunc("/movements", controller.GetMovements).Methods("GET")
-	r.HandleFunc("/movements/{id}", controller.GetById).Methods("GET")
-	r.HandleFunc("/movements", controller.Save).Methods("POST")
-	r.HandleFunc("/movements/{id}", controller.Update).Methods("PATCH")
+	r.HandleFunc("/movements/{pocket_id}", controller.GetMovements).Methods("GET")
+	r.HandleFunc("/movements/{pocket_id}/{id}", controller.GetById).Methods("GET")
+	r.HandleFunc("/movements/{pocket_id}", controller.Save).Methods("POST")
+	r.HandleFunc("/movements/{pocket_id}/{id}", controller.Update).Methods("PATCH")
 }
