@@ -22,7 +22,7 @@ func (repository *MovementRepository) GetMovements(movements *[]models.Movement)
 	repository.handler.Find(&movements)
 }
 
-func (repository *MovementRepository) GetById(id uint, movements *[]models.Movement) {
+func (repository *MovementRepository) GetById(id uint, movements *models.Movement) {
 	repository.handler.Find(&movements, "id = ?", id)
 }
 
