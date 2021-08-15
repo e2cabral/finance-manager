@@ -16,4 +16,5 @@ func NewRoutesConfig(prefix string) *RoutesConfig {
 func (c *RoutesConfig) SetupRoutes(r *mux.Router) {
 	sub := r.PathPrefix(c.Prefix).Subrouter()
 	routes.MovementsRoutes(sub)
+	routes.PocketRoutes(sub)
 }
