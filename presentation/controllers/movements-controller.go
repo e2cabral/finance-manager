@@ -17,9 +17,15 @@ func NewMovementsController() *MovementController {
 }
 
 func (m *MovementController) GetMovements(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	pocketId, err := strconv.Atoi(vars["pocket_id"])
+	if err != nil {
+		h.InternalServerError(w, err.Error())
+	}
+
 	service := services.MovementService{}
 
-	movements, err := service.GetMovements()
+	movements, err := service.GetMovements(uint(pocketId))
 	if err != nil {
 		h.InternalServerError(w, err.Error())
 	}
@@ -36,17 +42,30 @@ func (m *MovementController) GetById(w http.ResponseWriter, r *http.Request) {
 		h.InternalServerError(w, err.Error())
 	}
 
-	movement, err := service.GetById(uint(id))
+	pocketId, err := strconv.Atoi(vars["pocket_id"])
+	if err != nil {
+		h.InternalServerError(w, err.Error())
+	}
+
+	movement, err := service.GetById(uint(id), uint(pocketId))
 	h.Ok(w, movement)
 }
 
 func (m *MovementController) Save(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
 	var movement models.Movement
-
-	err := json.NewDecoder(r.Body).Decode(&movement)
-
 	service := services.MovementService{}
-	newMovement, err := service.Save(movement)
+
+	pocketId, err := strconv.Atoi(vars["pocket_id"])
+	if err != nil {
+		h.InternalServerError(w, err.Error())
+	}
+
+	if err := json.NewDecoder(r.Body).Decode(&movement); err != nil {
+		h.InternalServerError(w, err.Error())
+	}
+
+	newMovement, err := service.Save(uint(pocketId), movement)
 	if err != nil {
 		h.InternalServerError(w, err.Error())
 	}
@@ -55,11 +74,15 @@ func (m *MovementController) Save(w http.ResponseWriter, r *http.Request) {
 }
 
 func (m *MovementController) Update(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
 	var movement models.Movement
 
-	vars := mux.Vars(r)
-
 	id, err := strconv.Atoi(vars["id"])
+	if err != nil {
+		h.InternalServerError(w, err.Error())
+	}
+
+	pocketId, err := strconv.Atoi(vars["pocket_id"])
 	if err != nil {
 		h.InternalServerError(w, err.Error())
 	}
@@ -70,7 +93,7 @@ func (m *MovementController) Update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	service := services.MovementService{}
-	updated, err := service.Update(uint(id), movement)
+	updated, err := service.Update(uint(id), uint(pocketId), movement)
 
 	h.Ok(w, updated)
 }
