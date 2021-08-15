@@ -22,7 +22,7 @@ func (repository *PocketRepository) GetPockets(pockets *[]models.Pocket) {
 	repository.handler.Find(&pockets)
 }
 
-func (repository *PocketRepository) GetPocketById(id uint, pocket models.Pocket) {
+func (repository *PocketRepository) GetPocketById(id uint, pocket *models.Pocket) {
 	repository.handler.Find(&pocket, "id = ?", id)
 }
 
