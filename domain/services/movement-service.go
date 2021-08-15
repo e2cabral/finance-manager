@@ -19,36 +19,34 @@ func (m *MovementService) GetMovements() ([]models.Movement, error) {
 	return movements, nil
 }
 
-func (m *MovementService) GetById(id uint) (models.Movement, error) {
+func (m *MovementService) GetById(id uint) (*models.Movement, error) {
 	var movement models.Movement
 
 	repository, err := repositories.NewMovementRepository()
 	if err != nil {
-		return models.Movement{}, err
+		return nil, err
 	}
 
 	repository.GetById(id, &movement)
-	return movement, nil
+	return &movement, nil
 }
 
-func (m *MovementService) Save(movement models.Movement) (models.Movement, error) {
-	var newMovement models.Movement
-
+func (m *MovementService) Save(movement models.Movement) (*models.Movement, error) {
 	repository, err := repositories.NewMovementRepository()
 	if err != nil {
-		return models.Movement{}, err
+		return nil, err
 	}
 
 	repository.Save(&movement)
-	return newMovement, nil
+	return &movement, nil
 }
 
-func (m *MovementService) Update(id uint, movement models.Movement) (models.Movement, error) {
+func (m *MovementService) Update(id uint, movement models.Movement) (*models.Movement, error) {
 	repository, err := repositories.NewMovementRepository()
 	if err != nil {
-		return models.Movement{}, err
+		return nil, err
 	}
 
 	repository.Update(id, &movement)
-	return movement, nil
+	return &movement, nil
 }
