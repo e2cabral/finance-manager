@@ -1,7 +1,6 @@
 package main
 
 import (
-	"finance-manager/domain/models"
 	database "finance-manager/infra/database/client"
 	"finance-manager/main/config"
 	"github.com/gorilla/mux"
@@ -20,7 +19,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	if err := db.AutoMigrate(&models.Movement{}); err != nil {
+	if err := database.Migrate(db); err != nil {
 		log.Fatal(err)
 	}
 
