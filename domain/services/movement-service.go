@@ -42,3 +42,13 @@ func (m *MovementService) Save(movement models.Movement) (models.Movement, error
 	repository.Save(&movement)
 	return newMovement, nil
 }
+
+func (m *MovementService) Update(id uint, movement models.Movement) (models.Movement, error) {
+	repository, err := repositories.NewMovementRepository()
+	if err != nil {
+		return models.Movement{}, err
+	}
+
+	repository.Update(id, &movement)
+	return movement, nil
+}
