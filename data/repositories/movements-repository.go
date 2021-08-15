@@ -19,11 +19,11 @@ func NewMovementRepository() (*MovementRepository, error) {
 }
 
 func (repository *MovementRepository) GetMovements(pocketId uint, movements *[]models.Movement) {
-	repository.handler.Find(&movements, "pocket_id = ?", pocketId)
+	repository.handler.Joins("Pocket").Find(&movements, "pocket_id = ?", pocketId)
 }
 
 func (repository *MovementRepository) GetById(id uint, pocketId uint, movements *models.Movement) {
-	repository.handler.Find(&movements, "id = ? AND pocket_id = ?", id, pocketId)
+	repository.handler.Joins("Pocket").Find(&movements, "id = ? AND pocket_id = ?", id, pocketId)
 }
 
 func (repository *MovementRepository) Save(movement *models.Movement) {
