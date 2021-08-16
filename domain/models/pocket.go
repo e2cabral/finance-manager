@@ -8,6 +8,7 @@ import (
 type Pocket struct {
 	ID          uint           `json:"id" gorm:"primaryKey"`
 	UserID      uint           `json:"user_id"`
+	User        User           `json:"user" gorm:"references:UserID;foreignKey:UserID"`
 	Type        string         `json:"type"`
 	Name        string         `json:"name"`
 	Description string         `json:"description"`
