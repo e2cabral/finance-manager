@@ -13,10 +13,9 @@ func ToJSON(w http.ResponseWriter, data interface{}) {
 	}
 }
 
-func FromJSON(r io.ReadCloser) (*interface{}, error) {
-	var data interface{}
+func FromJSON(r io.ReadCloser, data interface{}) error {
 	if err := json.NewDecoder(r).Decode(&data); err != nil {
-		return nil, err
+		return err
 	}
-	return &data, nil
+	return nil
 }
