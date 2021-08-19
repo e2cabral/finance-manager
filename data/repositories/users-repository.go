@@ -16,3 +16,7 @@ func NewUsersRepository() *UsersRepository {
 func (repository *UsersRepository) Create(user *models.User) {
 	repository.handler.Create(&user)
 }
+
+func (repository *UsersRepository) Update(id uint, user *models.User) {
+	repository.handler.Update("username, password", &user).Where("id = ?", id)
+}
