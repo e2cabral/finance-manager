@@ -5,6 +5,7 @@ import (
 	"finance-manager/domain/models"
 	"finance-manager/domain/services"
 	h "finance-manager/infra/helpers/http"
+	"fmt"
 	"github.com/gorilla/mux"
 	"net/http"
 	"strconv"
@@ -46,4 +47,21 @@ func (controller *UsersController) Update(w http.ResponseWriter, r *http.Request
 	}
 
 	h.Ok(w, updated)
+}
+
+func (controller *UsersController) Delete(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+
+	id, err := strconv.Atoi(vars["id"])
+	if err != nil {
+		h.InternalServerError(w, err.Error())
+	}
+
+	service := services.UsersService{}
+	err = service.Delete(uint(id))
+	if err != nil {
+		h.InternalServerError(w, err.Error())
+	}
+
+	h.Ok(w, fmt.Sprintf("The user with id %d, was deleted.", id))
 }
