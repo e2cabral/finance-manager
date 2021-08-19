@@ -37,3 +37,7 @@ func (repository *PocketRepository) Update(id uint, pocket *models.Pocket) {
 		"description": pocket.Description,
 	}).Where("id = ?", id)
 }
+
+func (repository *PocketRepository) Delete(id uint) {
+	repository.handler.Delete(models.Pocket{}, "id = ?", id)
+}
