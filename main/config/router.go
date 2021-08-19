@@ -18,4 +18,5 @@ func (c *RoutesConfig) SetupRoutes(r *mux.Router) {
 	routes.MovementsRoutes(sub)
 	routes.PocketRoutes(sub)
 	routes.UsersRoutes(sub)
+	routes.AuthRoutes(sub)
 }
