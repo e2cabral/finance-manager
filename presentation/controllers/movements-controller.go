@@ -5,6 +5,7 @@ import (
 	"finance-manager/domain/models"
 	"finance-manager/domain/services"
 	h "finance-manager/infra/helpers/http"
+	"fmt"
 	"github.com/gorilla/mux"
 	"net/http"
 	"strconv"
@@ -96,4 +97,26 @@ func (m *MovementController) Update(w http.ResponseWriter, r *http.Request) {
 	updated, err := service.Update(uint(id), uint(pocketId), movement)
 
 	h.Ok(w, updated)
+}
+
+func (m *MovementController) Delete(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	service := services.MovementService{}
+
+	id, err := strconv.Atoi(vars["id"])
+	if err != nil {
+		h.InternalServerError(w, err.Error())
+	}
+
+	pocketId, err := strconv.Atoi(vars["pocket_id"])
+	if err != nil {
+		h.InternalServerError(w, err.Error())
+	}
+
+	err = service.Delete(uint(id), uint(pocketId))
+	if err != nil {
+		h.InternalServerError(w, err.Error())
+	}
+
+	h.Ok(w, fmt.Sprintf("Movement with id %d, was deleted.", id))
 }
