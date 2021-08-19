@@ -11,4 +11,5 @@ func MovementsRoutes(r *mux.Router) {
 	r.HandleFunc("/movements/{pocket_id}/{id}", controller.GetById).Methods("GET")
 	r.HandleFunc("/movements/{pocket_id}", controller.Save).Methods("POST")
 	r.HandleFunc("/movements/{pocket_id}/{id}", controller.Update).Methods("PATCH")
+	r.HandleFunc("/movements/{pocket_id}/{id}", controller.Update).Methods("DELETE")
 }
