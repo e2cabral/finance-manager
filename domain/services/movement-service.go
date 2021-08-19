@@ -51,3 +51,13 @@ func (m *MovementService) Update(id uint, pocketId uint, movement models.Movemen
 	repository.Update(id, pocketId, &movement)
 	return &movement, nil
 }
+
+func (m *MovementService) Delete(id uint) error {
+	repository, err := repositories.NewMovementRepository()
+	if err != nil {
+		return err
+	}
+
+	repository.Delete(id)
+	return nil
+}
