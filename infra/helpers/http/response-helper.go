@@ -22,6 +22,17 @@ func Ok(w http.ResponseWriter, data interface{}) {
 	h.ToJSON(w, response)
 }
 
+func Forbidden(w http.ResponseWriter, message string) {
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	w.WriteHeader(http.StatusForbidden)
+	response := Response{
+		Message: message,
+		Data:    nil,
+		Status:  http.StatusNotFound,
+	}
+	h.ToJSON(w, response)
+}
+
 func NotFound(w http.ResponseWriter, message string) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusNotFound)
