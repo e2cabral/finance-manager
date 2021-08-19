@@ -26,3 +26,13 @@ func (u *UsersService) Update(id uint, user models.User) (*models.User, error) {
 	repository.Update(id, &user)
 	return &user, nil
 }
+
+func (u *UsersService) Delete(id uint) error {
+	repository, err := repositories.NewUsersRepository()
+	if err != nil {
+		return err
+	}
+
+	repository.Delete(id)
+	return nil
+}
