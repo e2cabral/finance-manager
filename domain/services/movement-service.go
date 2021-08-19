@@ -52,12 +52,12 @@ func (m *MovementService) Update(id uint, pocketId uint, movement models.Movemen
 	return &movement, nil
 }
 
-func (m *MovementService) Delete(id uint) error {
+func (m *MovementService) Delete(id uint, pocketId uint) error {
 	repository, err := repositories.NewMovementRepository()
 	if err != nil {
 		return err
 	}
 
-	repository.Delete(id)
+	repository.Delete(id, pocketId)
 	return nil
 }
