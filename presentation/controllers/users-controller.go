@@ -13,6 +13,10 @@ import (
 
 type UsersController struct{}
 
+func NewUsersController() *UsersController {
+	return &UsersController{}
+}
+
 func (controller *UsersController) Save(w http.ResponseWriter, r *http.Request) {
 	var user models.User
 	if err := json.NewDecoder(r.Body).Decode(&user); err != nil {
