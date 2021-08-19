@@ -20,6 +20,15 @@ func NewUsersRepository() (*UsersRepository, error) {
 	}, nil
 }
 
+func (repository *UsersRepository) GetUserByUsername(username string, password string, user *models.User) {
+	repository.Handler.Find(
+		&user,
+		"username = ? AND password = ?",
+		username,
+		password,
+	)
+}
+
 func (repository *UsersRepository) Save(user *models.User) {
 	repository.Handler.Create(&user)
 }
