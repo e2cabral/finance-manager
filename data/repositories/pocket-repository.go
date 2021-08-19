@@ -7,7 +7,7 @@ import (
 )
 
 type PocketRepository struct {
-	handler *gorm.DB
+	Handler *gorm.DB
 }
 
 func NewPocketRepository() (*PocketRepository, error) {
@@ -15,23 +15,23 @@ func NewPocketRepository() (*PocketRepository, error) {
 	if err != nil {
 		return nil, err
 	}
-	return &PocketRepository{handler: db}, nil
+	return &PocketRepository{Handler: db}, nil
 }
 
 func (repository *PocketRepository) GetPockets(pockets *[]models.Pocket) {
-	repository.handler.Find(&pockets)
+	repository.Handler.Find(&pockets)
 }
 
 func (repository *PocketRepository) GetPocketById(id uint, pocket *models.Pocket) {
-	repository.handler.Find(&pocket, "id = ?", id)
+	repository.Handler.Find(&pocket, "id = ?", id)
 }
 
 func (repository *PocketRepository) Save(pocket *models.Pocket) {
-	repository.handler.Create(&pocket)
+	repository.Handler.Create(&pocket)
 }
 
 func (repository *PocketRepository) Update(id uint, pocket *models.Pocket) {
-	repository.handler.Updates(map[string]string{
+	repository.Handler.Updates(map[string]string{
 		"type":        pocket.Type,
 		"name":        pocket.Name,
 		"description": pocket.Description,
@@ -39,5 +39,5 @@ func (repository *PocketRepository) Update(id uint, pocket *models.Pocket) {
 }
 
 func (repository *PocketRepository) Delete(id uint) {
-	repository.handler.Delete(models.Pocket{}, "id = ?", id)
+	repository.Handler.Delete(models.Pocket{}, "id = ?", id)
 }
