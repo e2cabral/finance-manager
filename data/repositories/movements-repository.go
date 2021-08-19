@@ -34,6 +34,6 @@ func (repository *MovementRepository) Update(id uint, pocketId uint, movement *m
 	repository.handler.Update("value", &movement).Where("id = ? AND pocket_id = ?", id, pocketId)
 }
 
-func (repository *MovementRepository) Delete(id uint) {
-	repository.handler.Delete(models.Movement{}, "id = ?", id)
+func (repository *MovementRepository) Delete(id uint, pocketId uint) {
+	repository.handler.Delete(models.Movement{}, "id = ? AND pocket_id = ?", id, pocketId)
 }
