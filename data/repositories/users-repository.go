@@ -2,25 +2,32 @@ package repositories
 
 import (
 	"finance-manager/domain/models"
+	database "finance-manager/infra/database/client"
 	"gorm.io/gorm"
 )
 
 type UsersRepository struct {
-	handler *gorm.DB
+	Handler *gorm.DB
 }
 
-func NewUsersRepository() *UsersRepository {
-	return &UsersRepository{}
+func NewUsersRepository() (*UsersRepository, error) {
+	db, err := database.Connect()
+	if err != nil {
+		return nil, err
+	}
+	return &UsersRepository{
+		Handler: db,
+	}, nil
 }
 
-func (repository *UsersRepository) Create(user *models.User) {
-	repository.handler.Create(&user)
+func (repository *UsersRepository) Save(user *models.User) {
+	repository.Handler.Create(&user)
 }
 
 func (repository *UsersRepository) Update(id uint, user *models.User) {
-	repository.handler.Update("username, password", &user).Where("id = ?", id)
+	repository.Handler.Update("username, password", &user).Where("id = ?", id)
 }
 
 func (repository *UsersRepository) Delete(id uint) {
-	repository.handler.Delete(models.User{}, "id = ?", id)
+	repository.Handler.Delete(models.User{}, "id = ?", id)
 }
