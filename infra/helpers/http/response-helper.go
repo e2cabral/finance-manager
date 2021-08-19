@@ -19,7 +19,7 @@ func Ok(w http.ResponseWriter, data interface{}) {
 		Data:    data,
 		Status:  http.StatusOK,
 	}
-	h.JSON(w, response)
+	h.ToJSON(w, response)
 }
 
 func NotFound(w http.ResponseWriter, message string) {
@@ -30,7 +30,7 @@ func NotFound(w http.ResponseWriter, message string) {
 		Data:    nil,
 		Status:  http.StatusNotFound,
 	}
-	h.JSON(w, response)
+	h.ToJSON(w, response)
 }
 
 func InternalServerError(w http.ResponseWriter, message string) {
@@ -41,5 +41,5 @@ func InternalServerError(w http.ResponseWriter, message string) {
 		Data:    nil,
 		Status:  http.StatusInternalServerError,
 	}
-	h.JSON(w, response)
+	h.ToJSON(w, response)
 }
