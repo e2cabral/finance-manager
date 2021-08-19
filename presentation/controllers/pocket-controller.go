@@ -1,10 +1,10 @@
 package controllers
 
 import (
-	"encoding/json"
 	"finance-manager/domain/models"
 	"finance-manager/domain/services"
 	h "finance-manager/infra/helpers/http"
+	helpers "finance-manager/infra/helpers/json"
 	"fmt"
 	"github.com/gorilla/mux"
 	"net/http"
@@ -47,7 +47,7 @@ func (controller *PocketController) GetPocketById(w http.ResponseWriter, r *http
 
 func (controller *PocketController) Save(w http.ResponseWriter, r *http.Request) {
 	var pocket models.Pocket
-	if err := json.NewDecoder(r.Body).Decode(&pocket); err != nil {
+	if err := helpers.FromJSON(r.Body, &pocket); err != nil {
 		h.InternalServerError(w, err.Error())
 	}
 
@@ -70,7 +70,7 @@ func (controller *PocketController) Update(w http.ResponseWriter, r *http.Reques
 		h.InternalServerError(w, err.Error())
 	}
 
-	if err := json.NewDecoder(r.Body).Decode(&pocket); err != nil {
+	if err := helpers.FromJSON(r.Body, &pocket); err != nil {
 		h.InternalServerError(w, err.Error())
 	}
 

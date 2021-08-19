@@ -5,6 +5,7 @@ import (
 	"finance-manager/domain/models"
 	"finance-manager/domain/services"
 	h "finance-manager/infra/helpers/http"
+	helpers "finance-manager/infra/helpers/json"
 	"fmt"
 	"github.com/gorilla/mux"
 	"net/http"
@@ -40,7 +41,7 @@ func (controller *UsersController) Update(w http.ResponseWriter, r *http.Request
 	}
 
 	var user models.User
-	if err := json.NewDecoder(r.Body).Decode(&user); err != nil {
+	if err := helpers.FromJSON(r.Body, &user); err != nil {
 		h.InternalServerError(w, err.Error())
 	}
 

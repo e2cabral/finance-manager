@@ -1,10 +1,10 @@
 package controllers
 
 import (
-	"encoding/json"
 	"finance-manager/domain/models"
 	"finance-manager/domain/services"
 	h "finance-manager/infra/helpers/http"
+	helpers "finance-manager/infra/helpers/json"
 	"fmt"
 	"github.com/gorilla/mux"
 	"net/http"
@@ -62,7 +62,8 @@ func (m *MovementController) Save(w http.ResponseWriter, r *http.Request) {
 		h.InternalServerError(w, err.Error())
 	}
 
-	if err := json.NewDecoder(r.Body).Decode(&movement); err != nil {
+	err = helpers.FromJSON(r.Body, &movement)
+	if err != nil {
 		h.InternalServerError(w, err.Error())
 	}
 
@@ -88,7 +89,7 @@ func (m *MovementController) Update(w http.ResponseWriter, r *http.Request) {
 		h.InternalServerError(w, err.Error())
 	}
 
-	err = json.NewDecoder(r.Body).Decode(&movement)
+	err = helpers.FromJSON(r.Body, &movement)
 	if err != nil {
 		h.InternalServerError(w, err.Error())
 	}
