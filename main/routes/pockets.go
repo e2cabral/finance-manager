@@ -11,4 +11,5 @@ func PocketRoutes(r *mux.Router) {
 	r.HandleFunc("/pockets/{id}", controller.GetPocketById).Methods("GET")
 	r.HandleFunc("/pockets", controller.Save).Methods("POST")
 	r.HandleFunc("/pockets/{id}", controller.Update).Methods("PATCH")
+	r.HandleFunc("/pockets/{id}", controller.Delete).Methods("DELETE")
 }
