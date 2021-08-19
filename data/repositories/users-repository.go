@@ -20,3 +20,7 @@ func (repository *UsersRepository) Create(user *models.User) {
 func (repository *UsersRepository) Update(id uint, user *models.User) {
 	repository.handler.Update("username, password", &user).Where("id = ?", id)
 }
+
+func (repository *UsersRepository) Delete(id uint) {
+	repository.handler.Delete(models.User{}, "id = ?", id)
+}
