@@ -50,3 +50,12 @@ func (service *PocketService) Update(id uint, pocket models.Pocket) (*models.Poc
 	repository.Update(id, &pocket)
 	return &pocket, nil
 }
+
+func (service *PocketService) Delete(id uint) error {
+	repository, err := repositories.NewPocketRepository()
+	if err != nil {
+		return err
+	}
+	repository.Delete(id)
+	return nil
+}
