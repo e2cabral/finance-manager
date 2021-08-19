@@ -5,6 +5,7 @@ import (
 	"finance-manager/domain/models"
 	"finance-manager/domain/services"
 	h "finance-manager/infra/helpers/http"
+	"fmt"
 	"github.com/gorilla/mux"
 	"net/http"
 	"strconv"
@@ -79,4 +80,20 @@ func (controller *PocketController) Update(w http.ResponseWriter, r *http.Reques
 	}
 
 	h.Ok(w, &updated)
+}
+
+func (controller *PocketController) Delete(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	service := services.PocketService{}
+
+	id, err := strconv.Atoi(vars["id"])
+	if err != nil {
+		h.InternalServerError(w, err.Error())
+	}
+
+	if err = service.Delete(uint(id)); err != nil {
+		h.InternalServerError(w, err.Error())
+	}
+
+	h.Ok(w, fmt.Sprintf("Your pocket with id %d, was deleted.", id))
 }
