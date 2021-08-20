@@ -10,3 +10,10 @@ func Encrypt(text string) (string, error) {
 
 	return string(hashedString), nil
 }
+
+func CompareHashedStrings(notHashed string, hashed string) error {
+	if err := bcrypt.CompareHashAndPassword([]byte(hashed), []byte(notHashed)); err != nil {
+		return err
+	}
+	return nil
+}
