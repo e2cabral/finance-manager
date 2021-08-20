@@ -14,6 +14,6 @@ func (a *AuthService) Login(username string, password string) (*models.User, err
 		return nil, err
 	}
 
-	repository.GetUserByUsername(username, password, &user)
+	repository.GetUserByUsernameAndPassword(username, password, &user)
 	return &user, nil
 }
