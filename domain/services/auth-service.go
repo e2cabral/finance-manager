@@ -15,12 +15,13 @@ func (a *AuthService) Login(username string, password string) (*models.User, err
 		return nil, err
 	}
 
-	hashedPassword, err := encryption.Encrypt(password)
-	if err != nil {
-		return nil, err
+	repository.GetUserByUsername(username, &user)
+
+	ok := encryption.CompareHashedStrings(password, user.Password)
+	if ok != nil {
+		return nil, ok
 	}
 
-	repository.GetUserByUsernameAndPassword(username, hashedPassword, &user)
 	return &user, nil
 }
 
@@ -48,7 +49,7 @@ func (a *AuthService) IsUsernameUsed(username string) (bool, error) {
 
 	repository.GetUserByUsername(username, &user)
 
-	if &user != nil {
+	if user.ID != 0 {
 		return true, nil
 	}
 	return false, nil
