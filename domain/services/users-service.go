@@ -36,3 +36,18 @@ func (u *UsersService) Delete(id uint) error {
 	repository.Delete(id)
 	return nil
 }
+
+func (u *UsersService) IsUsernameUsed(username string) (bool, error) {
+	var user models.User
+	repository, err := repositories.NewUsersRepository()
+	if err != nil {
+		return false, err
+	}
+
+	repository.GetUserByUsername(username, &user)
+
+	if &user != nil {
+		return true, nil
+	}
+	return false, nil
+}
