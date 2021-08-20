@@ -52,7 +52,7 @@ func (a *AuthController) SignUp(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	service := services.UsersService{}
+	service := services.AuthService{}
 
 	userExists, err := service.IsUsernameUsed(user.Username)
 	if err != nil {
@@ -65,7 +65,7 @@ func (a *AuthController) SignUp(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	u, err := service.Save(user)
+	u, err := service.SignUp(user)
 	if err != nil {
 		h.InternalServerError(w, err.Error())
 		return
