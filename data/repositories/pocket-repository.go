@@ -19,7 +19,7 @@ func NewPocketRepository() (*PocketRepository, error) {
 }
 
 func (repository *PocketRepository) GetPockets(pockets *[]models.Pocket) {
-	repository.Handler.Find(&pockets)
+	repository.Handler.Joins("Movements").Find(&pockets)
 }
 
 func (repository *PocketRepository) GetPocketById(id uint, pocket *models.Pocket) {
