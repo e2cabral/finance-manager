@@ -1,8 +1,8 @@
 package main
 
 import (
-	database "finance-manager/infra/database/client"
-	"finance-manager/main/config"
+	"finance-manager/src/infra/database/client"
+	"finance-manager/src/main/config"
 	"github.com/gorilla/mux"
 	"log"
 	"net/http"
