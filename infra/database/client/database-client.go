@@ -2,19 +2,23 @@ package database
 
 import (
 	"finance-manager/domain/models"
+	"finance-manager/infra/environment"
 	"fmt"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
-	"os"
 )
 
 func Connect() (*gorm.DB, error) {
-	password := os.Getenv("DB_PASSWORD")
-	username := os.Getenv("DB_USERNAME")
-	//defaultDb := os.Getenv("DEFAULT_DB")
-	host := os.Getenv("DB_HOST")
-	table := os.Getenv("DB_TABLE")
-	port := os.Getenv("DB_PORT")
+	env := environment.Env{}
+	password, err := env.GetVariable("DB_PASSWORD")
+	username, err := env.GetVariable("DB_USERNAME")
+	host, err := env.GetVariable("DB_HOST")
+	table, err := env.GetVariable("DB_TABLE")
+	port, err := env.GetVariable("DB_PORT")
+
+	if err != nil {
+		return nil, err
+	}
 
 	connectionString := fmt.Sprintf(
 		"host=%s user=%s password=%s dbname=%s port=%s sslmode=disable",
@@ -22,15 +26,15 @@ func Connect() (*gorm.DB, error) {
 	)
 
 	database, err := gorm.Open(postgres.Open(connectionString), &gorm.Config{})
-
 	if err != nil {
 		return nil, err
 	}
+
 	return database, nil
 }
 
 func Migrate(db *gorm.DB) error {
-	if err := db.AutoMigrate(&models.Movement{}, &models.Pocket{}); err != nil {
+	if err := db.AutoMigrate(&models.Movement{}, &models.Pocket{}, &models.User{}); err != nil {
 		return err
 	}
 	return nil
