@@ -9,6 +9,7 @@ type Pocket struct {
 	ID          uint           `json:"id" gorm:"primaryKey"`
 	UserID      uint           `json:"user_id"`
 	User        User           `json:"user" gorm:"references:ID;foreignKey:UserID"`
+	Movements   []Movement     `json:"movements" gorm:"references:ID"`
 	Type        string         `json:"type"`
 	Name        string         `json:"name"`
 	Description string         `json:"description"`
