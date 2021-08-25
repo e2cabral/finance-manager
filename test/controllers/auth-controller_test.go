@@ -21,7 +21,7 @@ func TestLoginEndpoint(t *testing.T) {
 		t.Fail()
 	}
 
-	r, err := client.R().SetBody(body).Post(fmt.Sprintf("%s/login", test.BASE_URL))
+	r, err := client.R().SetBody(body).Post(fmt.Sprintf("%s/login", test.BaseUrl))
 	if err != nil {
 		t.Fail()
 	}
@@ -39,7 +39,7 @@ func TestSignUpEndpoint(t *testing.T) {
 		t.Fail()
 	}
 
-	r, err := client.R().SetBody(body).Post(fmt.Sprintf("%s/sign-up", test.BASE_URL))
+	r, err := client.R().SetBody(body).Post(fmt.Sprintf("%s/sign-up", test.BaseUrl))
 	if err != nil {
 		t.Fail()
 	}
