@@ -3,7 +3,6 @@
 package test
 
 import (
-	"finance-manager/src/domain/models"
 	"finance-manager/test"
 	"fmt"
 	"github.com/stretchr/testify/assert"
@@ -16,15 +15,12 @@ func TestLoginEndpoint(t *testing.T) {
 
 	client := resty.New()
 
-	body, err := client.JSONMarshal(models.User{Username: "edinhodograu", Password: "senhaforte"})
-	if err != nil {
-		t.Fail()
-	}
+	r, err := client.
+		R().
+		SetBody(`{"username": "edinhodograu", "password": "senhaforte"}`).
+		Post(fmt.Sprintf("%s/login", test.BaseUrl))
 
-	r, err := client.R().SetBody(body).Post(fmt.Sprintf("%s/login", test.BaseUrl))
-	if err != nil {
-		t.Fail()
-	}
+	assert.NoError(t, err)
 
 	assert.Equal(t, 200, r.StatusCode())
 }
@@ -34,15 +30,12 @@ func TestSignUpEndpoint(t *testing.T) {
 
 	client := resty.New()
 
-	body, err := client.JSONMarshal(models.User{Username: "eddietest", Password: "strongpassword"})
-	if err != nil {
-		t.Fail()
-	}
+	r, err := client.
+		R().
+		SetBody(`{"username": "eddietest", "password": "strongpassword"}`).
+		Post(fmt.Sprintf("%s/sign-up", test.BaseUrl))
 
-	r, err := client.R().SetBody(body).Post(fmt.Sprintf("%s/sign-up", test.BaseUrl))
-	if err != nil {
-		t.Fail()
-	}
+	assert.NoError(t, err)
 
 	assert.Equal(t, 200, r.StatusCode())
 }
