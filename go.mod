@@ -7,7 +7,9 @@ require (
 	github.com/go-resty/resty/v2 v2.6.0 // indirect
 	github.com/gorilla/mux v1.8.0
 	github.com/joho/godotenv v1.3.0 // indirect
+	github.com/stretchr/testify v1.7.0 // indirect
 	golang.org/x/crypto v0.0.0-20210817164053-32db794688a5 // indirect
+	gopkg.in/resty.v1 v1.12.0 // indirect
 	gorm.io/driver/postgres v1.1.0
 	gorm.io/gorm v1.21.13
 )
